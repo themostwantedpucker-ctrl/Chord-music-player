@@ -24,17 +24,13 @@ jobs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
       
-    - name: Make gradlew executable
-      run: chmod +x ./gradlew
-      
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
+      with:
+        gradle-version: 7.6.3
+        
     - name: Build debug APK
-      run: |
-        if [ -f "./gradlew" ]; then
-          ./gradlew assembleDebug
-        else
-          echo "Using gradlew.bat as fallback"
-          bash gradlew.bat assembleDebug
-        fi
+      run: gradle assembleDebug
       
     - name: Upload APK
       uses: actions/upload-artifact@v4
